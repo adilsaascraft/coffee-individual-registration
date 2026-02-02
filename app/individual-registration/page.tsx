@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, CheckCircle2 } from 'lucide-react'
-
+import { toast } from 'sonner'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -47,23 +47,38 @@ export default function CoffeeSponsorPage() {
     },
   })
 
-  const onSubmit = async (data: CoffeeSponsorForm) => {
-    if (submitting) return
-    setSubmitting(true)
 
-    try {
-      await apiRequest({
-        endpoint: '/api/registers',
-        method: 'POST',
-        body: data,
-      })
-      setSuccess(true)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setSubmitting(false)
-    }
+  // On Submit Function
+
+const onSubmit = async (data: CoffeeSponsorForm) => {
+  if (submitting) return
+  setSubmitting(true)
+
+  try {
+    await apiRequest({
+      endpoint: '/api/registers',
+      method: 'POST',
+      body: data,
+    })
+
+    toast.success('Registration successful ☕', {
+      description: 'Your coffee registration is complete.',
+    })
+
+    setSuccess(true)
+  } catch (error: any) {
+    toast.error('Registration failed', {
+      description: error.message, // 👈 THIS WILL SHOW:
+      // "Email already registered"
+      // "Mobile number already registered"
+      // "Invalid coupon code"
+    })
+  } finally {
+    setSubmitting(false)
   }
+}
+
+
 
   return (
     <div className="flex min-h-svh flex-col bg-gradient-to-b from-orange-50 to-orange-100">
@@ -216,10 +231,10 @@ export default function CoffeeSponsorPage() {
               <div className="flex flex-col items-center gap-4 py-10 text-center">
                 <CheckCircle2 className="h-14 w-14 text-orange-500" />
                 <h2 className="text-2xl font-bold">
-                  Thank you for sponsoring! ☕
+                  Thank you for registering! ☕
                 </h2>
                 <p className="text-muted-foreground">
-                  Your coffee means a lot to us ❤️
+                  Your registration means a lot to us ❤️
                 </p>
               </div>
             )}
