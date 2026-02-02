@@ -35,6 +35,7 @@ export default function CoffeeSponsorPage() {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<CoffeeSponsorForm>({
     resolver: zodResolver(CoffeeSponsorSchema),
@@ -46,6 +47,13 @@ export default function CoffeeSponsorPage() {
       terms: undefined,
     },
   })
+
+  // Reset Helper 
+  const handleNewRegistration = () => {
+  reset()
+  setSuccess(false)
+}
+
 
 
   // On Submit Function
@@ -228,15 +236,53 @@ const onSubmit = async (data: CoffeeSponsorForm) => {
               </form>
             ) : (
               /* ---------------- SUCCESS SCREEN ---------------- */
-              <div className="flex flex-col items-center gap-4 py-10 text-center">
-                <CheckCircle2 className="h-14 w-14 text-orange-500" />
-                <h2 className="text-2xl font-bold">
-                  Thank you for registering! ☕
-                </h2>
-                <p className="text-muted-foreground">
-                  Your registration means a lot to us ❤️
-                </p>
-              </div>
+<div className="relative flex flex-col items-center gap-6 py-12 text-center overflow-hidden">
+  {/* Glow background */}
+  <div className="absolute inset-0 -z-10 bg-gradient-to-br from-orange-100 via-orange-50 to-white animate-pulse" />
+
+  {/* Animated check */}
+  <div className="relative">
+    <span className="absolute inset-0 rounded-full bg-orange-300 blur-xl opacity-40 animate-ping" />
+    <CheckCircle2 className="relative h-20 w-20 text-orange-500 animate-bounce" />
+  </div>
+
+  {/* Title */}
+  <h2 className="text-3xl font-extrabold text-orange-600 animate-fade-in">
+    Registration Successful! 🎉
+  </h2>
+
+  {/* Message */}
+  <p className="max-w-sm text-sm text-gray-600 animate-fade-in delay-100">
+    Thank you for registering for Coffee ☕  
+    Your registration has been completed successfully.
+  </p>
+
+  {/* Email Info Card */}
+  <div className="w-full max-w-sm rounded-xl border border-orange-200 bg-orange-50 p-4 shadow-sm animate-slide-up">
+    <p className="text-sm text-orange-700 font-medium">
+      📩 Check your email!
+    </p>
+    <p className="mt-1 text-xs text-gray-600">
+      You will receive a <strong>registration email</strong> containing your
+      <strong> registration number</strong> and a
+      <strong> QR code</strong> for verification.
+    </p>
+  </div>
+
+  {/* Action */}
+  <Button
+    onClick={handleNewRegistration}
+    className="mt-4 w-full max-w-xs bg-orange-500 hover:bg-orange-600 transition-all duration-300 hover:scale-105"
+  >
+    New Registration
+  </Button>
+
+  {/* Brand note */}
+  <p className="mt-4 text-xs text-gray-400 animate-fade-in delay-200">
+    Brewed with ❤️ by SaaScraft Studio India Pvt. Ltd
+  </p>
+</div>
+
             )}
           </CardContent>
         </Card>
