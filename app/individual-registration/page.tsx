@@ -53,7 +53,7 @@ export default function CoffeeSponsorPage() {
 
     try {
       await apiRequest({
-        endpoint: '/api/coffee-sponsor',
+        endpoint: '/api/registers',
         method: 'POST',
         body: data,
       })
@@ -71,12 +71,12 @@ export default function CoffeeSponsorPage() {
       <div
         className="
           relative w-full overflow-hidden
-          h-[200px] md:h-[300px] lg:h-[400px]
+          h-[200px] md:h-[280px] lg:h-[450px]
         "
       >
         <Image
-          src="https://res.cloudinary.com/dymanaa1j/image/upload/v1770015902/ChatGPT_Image_Feb_2_2026_12_31_20_PM_1_yszltg.png"
-          alt="Indian Coffee House Banner"
+          src="https://res.cloudinary.com/dymanaa1j/image/upload/v1770021105/ChatGPT_Image_Feb_2_2026_02_00_00_PM_1_b6chc9.png"
+          alt="Coffee Banner"
           fill
           priority
           sizes="100vw"
@@ -93,10 +93,10 @@ export default function CoffeeSponsorPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <div className="text-center">
                   <h1 className="text-2xl sm:text-3xl font-bold text-orange-600">
-                    Indian Coffee House ☕
+                    Coffee Registration Form ☕
                   </h1>
                   <p className="text-sm text-muted-foreground">
-                    Sponsor a coffee & support us
+                    Please fill the form to register
                   </p>
                 </div>
 
@@ -208,7 +208,7 @@ export default function CoffeeSponsorPage() {
                   {submitting && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Sponsor My Coffee
+                  Register Now
                 </Button>
               </form>
             ) : (
