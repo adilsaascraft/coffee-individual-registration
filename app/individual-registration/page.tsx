@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, CheckCircle2 } from 'lucide-react'
@@ -33,12 +33,18 @@ export default function CoffeeSponsorPage() {
   const [success, setSuccess] = useState(false)
 
   const {
-    register,
     handleSubmit,
-    setValue,
+    control,
     formState: { errors },
   } = useForm<CoffeeSponsorForm>({
     resolver: zodResolver(CoffeeSponsorSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      mobile: '',
+      couponCode: '',
+      terms: undefined,
+    },
   })
 
   const onSubmit = async (data: CoffeeSponsorForm) => {
@@ -81,15 +87,7 @@ export default function CoffeeSponsorPage() {
 
       {/* ---------------- MAIN CONTENT ---------------- */}
       <div className="flex flex-1 items-center justify-center px-4 py-10">
-        <Card
-          className="
-            w-full
-            max-w-md sm:max-w-lg
-            shadow-xl
-            border-orange-200
-            bg-white
-          "
-        >
+        <Card className="w-full max-w-md sm:max-w-lg shadow-xl border-orange-200 bg-white">
           <CardContent className="p-6 sm:p-8">
             {!success ? (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -103,68 +101,99 @@ export default function CoffeeSponsorPage() {
                 </div>
 
                 {/* Name */}
-                <div className="grid gap-2">
-                  <Label>Name</Label>
-                  <Input
-                    placeholder="Enter your full name"
-                    {...register('name')}
-                  />
-                  {errors.name && (
-                    <p className="text-sm text-red-500">
-                      {errors.name.message}
-                    </p>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="grid gap-2">
+                      <Label>Name</Label>
+                      <Input
+                        {...field}
+                        placeholder="Enter your full name"
+                      />
+                      {errors.name && (
+                        <p className="text-sm text-red-500">
+                          {errors.name.message}
+                        </p>
+                      )}
+                    </div>
                   )}
-                </div>
+                />
 
                 {/* Email */}
-                <div className="grid gap-2">
-                  <Label>Email</Label>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email address"
-                    {...register('email')}
-                  />
-                  {errors.email && (
-                    <p className="text-sm text-red-500">
-                      {errors.email.message}
-                    </p>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="grid gap-2">
+                      <Label>Email</Label>
+                      <Input
+                        type="email"
+                        {...field}
+                        placeholder="Enter your email address"
+                      />
+                      {errors.email && (
+                        <p className="text-sm text-red-500">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
                   )}
-                </div>
+                />
 
                 {/* Mobile */}
-                <div className="grid gap-2">
-                  <Label>Mobile (optional)</Label>
-                  <Input
-                    placeholder="Enter mobile number"
-                    {...register('mobile')}
-                  />
-                </div>
+                <Controller
+                  name="mobile"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="grid gap-2">
+                      <Label>Mobile (optional)</Label>
+                      <Input
+                        {...field}
+                        placeholder="Enter mobile number"
+                      />
+                    </div>
+                  )}
+                />
 
                 {/* Coupon Code */}
-                <div className="grid gap-2">
-                  <Label>Coupon Code</Label>
-                  <Input
-                    placeholder="Enter coupon code"
-                    {...register('couponCode')}
-                  />
-                  {errors.couponCode && (
-                    <p className="text-sm text-red-500">
-                      {errors.couponCode.message}
-                    </p>
+                <Controller
+                  name="couponCode"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="grid gap-2">
+                      <Label>Coupon Code</Label>
+                      <Input
+                        {...field}
+                        placeholder="Enter coupon code"
+                      />
+                      {errors.couponCode && (
+                        <p className="text-sm text-red-500">
+                          {errors.couponCode.message}
+                        </p>
+                      )}
+                    </div>
                   )}
-                </div>
+                />
 
                 {/* Terms */}
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    onCheckedChange={(v) =>
-                      v === true && setValue('terms', true)
-                    }
-                  />
-                  <Label className="text-sm">
-                    I agree to the terms & conditions
-                  </Label>
-                </div>
+                <Controller
+                  name="terms"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(checked) =>
+                          field.onChange(checked === true)
+                        }
+                      />
+                      <Label className="text-sm">
+                        I agree to the terms & conditions
+                      </Label>
+                    </div>
+                  )}
+                />
                 {errors.terms && (
                   <p className="text-sm text-red-500">
                     {errors.terms.message}
@@ -174,11 +203,7 @@ export default function CoffeeSponsorPage() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="
-                    w-full
-                    bg-orange-500
-                    hover:bg-orange-600
-                  "
+                  className="w-full bg-orange-500 hover:bg-orange-600"
                 >
                   {submitting && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -205,8 +230,8 @@ export default function CoffeeSponsorPage() {
       {/* ---------------- FOOTER ---------------- */}
       <footer className="border-t bg-white/70 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 py-4 text-center text-xs text-gray-600">
-          © {new Date().getFullYear()} Indian Coffee House.  
-          All rights reserved.
+          © {new Date().getFullYear()} All Rights Reserved.
+          Powered by SaaScraft Studio (India) Pvt. Ltd.
         </div>
       </footer>
     </div>
