@@ -79,7 +79,7 @@ export default function CoffeeSponsorPage() {
             // ⏳ Delay QR rendering
             setTimeout(() => {
                 setShowQr(true)
-            }, 10000)
+            }, 3000)
         } catch (error: any) {
             toast.error('Registration failed', {
                 description: error.message,
