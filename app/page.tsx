@@ -116,17 +116,19 @@ export default function CoffeeSponsorPage() {
     return (
         <div className="flex min-h-svh flex-col bg-gradient-to-b from-orange-50 to-orange-100">
             {/* ---------------- COFFEE BANNER ---------------- */}
-            <div className="relative w-full overflow-hidden h-[200px] md:h-[280px] lg:h-[400px]">
-                <Image
-                    src="https://res.cloudinary.com/dymanaa1j/image/upload/v1770199028/IICF_GFormBanner_agon5d.jpg"
-                    alt="Coffee Banner"
-                    fill
-                    priority
-                    sizes="100vw"
-                    className="object-fit object-center"
-                />
-                <div className="absolute inset-0 bg-orange-900/30" />
-            </div>
+<div className="relative w-full overflow-hidden">
+  <Image
+    src="https://res.cloudinary.com/dymanaa1j/image/upload/v1770199028/IICF_GFormBanner_agon5d.jpg"
+    alt="Coffee Banner"
+    width={1920}   // 👈 original image width
+    height={600}   // 👈 original image height
+    priority
+    sizes="100vw"
+    className="w-full h-auto object-contain"
+  />
+  <div className="absolute inset-0 bg-orange-900/30" />
+</div>
+
 
             {/* ---------------- MAIN CONTENT ---------------- */}
             <div className="flex flex-1 items-center justify-center px-4 py-10">
