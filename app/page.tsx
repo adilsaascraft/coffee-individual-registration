@@ -83,7 +83,7 @@ export default function CoffeeSponsorPage() {
                 setShowQr(true)
             }, 1500)
         } catch (error: any) {
-            toast.error('Registration failed', {
+            toast.warning('Registration failed', {
                 description: error.message,
             })
         } finally {
