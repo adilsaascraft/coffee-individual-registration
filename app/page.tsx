@@ -120,8 +120,8 @@ export default function CoffeeSponsorPage() {
   <Image
     src="https://res.cloudinary.com/dymanaa1j/image/upload/v1770199028/IICF_GFormBanner_agon5d.jpg"
     alt="Coffee Banner"
-    width={1920}   // 👈 original image width
-    height={600}   // 👈 original image height
+    width={1700}   // 👈 original image width
+    height={300}   // 👈 original image height
     priority
     sizes="100vw"
     className="w-full h-auto object-contain"
