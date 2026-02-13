@@ -170,7 +170,7 @@ export default function CoffeeSponsorPage() {
                                     control={control}
                                     render={({ field }) => (
                                         <div className="grid gap-2">
-                                            <Label>Email </Label>
+                                            <Label>Email * </Label>
                                             <Input
                                                 type="email"
                                                 {...field}
